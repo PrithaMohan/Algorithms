@@ -1,0 +1,102 @@
+/********************************************************************************************
+
+Sample input/output 1:
+Enter The Number of Elements...15                                                                                                                
+                                                                                                                                                 
+Enter the Elements...                                                                                                                            
+15 14 13 12 11 10 9 8 7 6 5 4 3 2 1                                                                                                              
+                                                                                                                                                 
+Before Sorting...                                                                                                                                
+15 14 13 12 11 10 9 8 7 6 5 4 3 2 1                                                                                                              
+After Sorting...                                                                                                                                 
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15        
+========================================================
+
+Sample input/output 2:
+Enter The Number of Elements...10                                                                                                                
+                                                                                                                                                 
+Enter the Elements...                                                                                                                            
+5 5 4 4 3 3 2 2 1 1                                                                                                                              
+                                                                                                                                                 
+Before Sorting...                                                                                                                                
+5 5 4 4 3 3 2 2 1 1                                                                                                                              
+After Sorting...                                                                                                                                 
+1 1 2 2 3 3 4 4 5 5      
+
+==========================================================
+
+Sample input/output 3:
+
+Enter The Number of Elements...20                                                                                                                
+                                                                                                                                                 
+Enter the Elements...                                                                                                                            
+1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0                                                                                                          
+                                                                                                                                                 
+Before Sorting...                                                                                                                                
+1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0                                                                                                          
+After Sorting...                                                                                                                                 
+0 0 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 
+
+********************************************************************************************/
+
+#include <stdio.h>
+#include<limits.h>
+int *arr, N ;
+void display()
+{
+    for(int ind = 0; ind < N; ind++)
+    printf("%d ",*(arr+ind));
+}
+void swap(int ind1 , int ind2)
+{
+     int temp;
+     temp = arr[ind1];
+     arr[ind1] = arr[ind2];
+     arr[ind2] = temp;
+     
+}
+int partition(int start , int end)
+{
+    int pivot = start, i = start+1, j = end;
+    while(1)
+    {
+        while(arr[i] < arr[pivot] && i < end)
+        ++i;
+        while(arr[j] > arr[pivot])
+        --j;
+        if(i < j)
+          swap(i,j);
+        else
+          {
+              swap(pivot,j);
+              return j;
+          }
+    }
+    
+}
+void quicsort(int start , int end)
+{
+    if(start < end)
+    {
+    int pivot = partition(start , end);
+    quicsort(start , pivot-1);
+    quicsort(pivot+1 , end);
+    }
+}
+int main()
+{
+
+printf("Enter The Number of Elements...");
+scanf("%d", &N);
+arr=(int*)malloc(N * sizeof(int));
+printf("\nEnter the Elements...\n");
+for(int ind = 0; ind < N; ind++)
+scanf("%d",(arr+ind));
+printf("\nBefore Sorting...\n");
+display();
+quicsort(0,N-1);
+printf("\nAfter Sorting...\n");
+display();
+
+    return 0;
+}
