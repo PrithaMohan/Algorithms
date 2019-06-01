@@ -1,0 +1,75 @@
+/*********************************************************************************************
+Sample input/output ! :
+Enter The Number of Elements...15                                                                                                              
+                                                                                                                                               
+Enter the Elements...                                                                                                                          
+15 14 13 12 11 10 9 8 7 6 5 4 3 2 1                                                                                                            
+                                                                                                                                               
+Before Sorting...                                                                                                                              
+15 14 13 12 11 10 9 8 7 6 5 4 3 2 1                                                                                                            
+After Sorting...                                                                                                                               
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15                                                                                                            
+                     
+=======================================================================
+Sample input/output 2 :
+
+Enter The Number of Elements...10                                                                                                              
+                                                                                                                                               
+Enter the Elements...                                                                                                                          
+1 2 3 4 5 6 7 8 9 10                                                                                                                           
+                                                                                                                                               
+Before Sorting...                                                                                                                              
+1 2 3 4 5 6 7 8 9 10                                                                                                                           
+After Sorting...                                                                                                                               
+1 2 3 4 5 6 7 8 9 10   
+=======================================================================
+
+**********************************************************************************************/
+#include <stdio.h>
+#include<limits.h>
+int *arr, N ;
+void display()
+{
+    for(int ind = 0; ind < N; ind++)
+    printf("%d ",*(arr+ind));
+}
+int find_smallest(int start)
+{int smallest = INT_MAX , small_index = N;
+    for(int ind = start; ind < N; ind++)
+        if(arr[ind] < smallest)
+            {
+                smallest = arr[ind];
+                small_index = ind;
+            }
+ return small_index;
+}
+void SlectionSort()
+{
+    for(int ind = 0; ind < N-1; ind++)
+    {
+        int small_index = find_smallest(ind+1);
+        if(small_index != ind && arr[small_index] < arr[ind])
+          {
+              arr[small_index] = arr[ind] ^ arr[small_index] ;
+              arr[ind] = arr[ind] ^ arr[small_index] ;
+              arr[small_index] = arr[ind] ^ arr[small_index] ;
+          }
+    }
+}
+int main()
+{
+
+printf("Enter The Number of Elements...");
+scanf("%d", &N);
+arr=(int*)malloc(N * sizeof(int));
+printf("\nEnter the Elements...\n");
+for(int ind = 0; ind < N; ind++)
+scanf("%d",(arr+ind));
+printf("\nBefore Sorting...\n");
+display();
+SlectionSort(arr,N);
+printf("\nAfter Sorting...\n");
+display();
+
+    return 0;
+}
